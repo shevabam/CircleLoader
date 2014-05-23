@@ -1,0 +1,57 @@
+@charset "UTF-8";
+@import "compass";
+
+$loader-color: #fff;
+$loader-size: 20px;
+
+@mixin prefixer($property, $value) {
+  @each $prefix in "-webkit-", "-moz-", "-ms-", "-o-", "" {
+    #{unquote($prefix)}#{$property}: #{$value};
+  }
+}
+
+@mixin loader-circle($size, $color) {
+    display: block;
+    width: $size;
+    height: $size;
+    background: $color;
+    @include border-radius(50%);
+}
+
+.loader {
+    margin: 0 4px;
+    margin-left: $loader-size + 10px;
+    position: relative;
+    @include loader-circle($loader-size, $loader-color);
+    @include prefixer(animation, "loader-fade 0.5s 0.5s infinite alternate");
+  
+   &:before {
+     content: '';
+     @include loader-circle($loader-size, $loader-color);
+     position: absolute;
+     right: $loader-size + 10px;
+     @include prefixer(animation, "loader-fade 1s infinite alternate");
+   }
+  
+   &:after {
+     content: '';
+     @include loader-circle($loader-size, $loader-color);
+     position: absolute;
+     left: $loader-size + 10px;
+     @include prefixer(animation, "loader-fade 1s 1s infinite alternate");
+   }
+}
+
+
+@-webkit-keyframes loader-fade {
+    from { background-color: $loader-color; }
+    to { background-color: rgba($loader-color, .2); }
+}
+@-moz-keyframes loader-fade {
+    from { background-color: $loader-color; }
+    to { background-color: rgba($loader-color, .2); }
+}
+@keyframes loader-fade {
+    from { background-color: $loader-color; }
+    to { background-color: rgba($loader-color, .2); }
+}
